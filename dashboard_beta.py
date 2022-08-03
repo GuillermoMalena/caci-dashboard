@@ -8,7 +8,6 @@ import os
 
 ### Get folder paths for subdirectories
 brand_profiles = ('./brand_profiles')
-brand_db = ('./brand_db')
 brand_avgs = ('./brand_means')
 
 ##set header
