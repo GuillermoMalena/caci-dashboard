@@ -53,7 +53,7 @@ option = option.lower()
 filename = f'{option}_jobs.csv'
 jobs = pd.read_csv(os.path.join(brand_profiles,f'{option}_jobs.csv'),dtype=str).head(15)
 nat = pd.read_csv(os.path.join(brand_profiles,f'{option}_nationality.csv'),dtype=str).head(15)
-ints = pd.read_csv(os.path.join(brand_profiles,f'{option}_ints.csv'),dtype=str).head(15)
+ints = pd.read_csv(os.path.join(brand_profiles,f'{option}_interests.csv'),dtype=str).head(15)
 cities = pd.read_csv(os.path.join(brand_profiles,f'{option}_city.csv'),dtype=str).head(15)
 fam = pd.read_csv(os.path.join(brand_profiles,f'{option}_family.csv'),dtype=str)
 
@@ -90,7 +90,7 @@ top_city_str = cities.iloc[0,:]['city']
 
 
 ## get equivalent averages
-avg_jobs = pd.read_csv(os.path.join(brand_profiles,f'Music_Rapper_job_avg.csv'),dtype=str)
+avg_jobs = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_job_avg.csv'),dtype=str)
 avg_jobs = avg_jobs.rename(columns={'job':'jobs','w_avg':'Percent'}).head(15)
 avg_jobs = avg_jobs[['jobs','Percent']]
 avg_jobs['Percent'] = avg_jobs['Percent'].astype(float).round(2)
@@ -98,7 +98,7 @@ avg_jobs['Brand'] = 'Average'
 avg_jobs_top = avg_jobs.loc[avg_jobs['jobs'] == jobs.iloc[0,:]['jobs']]
 avg_jobs_val =  round(float(avg_jobs_top.iloc[0,:]['Percent']),2)
 
-avg_nat = pd.read_csv(os.path.join(brand_profiles,f'Music_Rapper_nationality_avg.csv'),dtype=str)
+avg_nat = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_nationality_avg.csv'),dtype=str)
 avg_nat = avg_nat.rename(columns={'job':'jobs','w_avg':'Percent'})
 avg_nat = avg_nat[['nationality','Percent']]
 avg_nat['Percent'] = avg_nat['Percent'].astype(float).round(2)
@@ -106,12 +106,12 @@ avg_nat['Brand'] = 'Average'
 avg_nat_top = avg_nat.loc[avg_nat['nationality'] == nat.iloc[0,:]['nationality']]
 avg_nat_val =  round(float(avg_nat_top.iloc[0,:]['Percent']),2)
 
-avg_city = pd.read_csv(os.path.join(brand_profiles,f'Music_Rapper_city_avg.csv'),dtype=str)
+avg_city = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_city_avg.csv'),dtype=str)
 avg_city = avg_city[['city','w_avg','Category Level 1','Category Level 2','Entity']]
 avg_city = avg_city.loc[avg_city['city'] == cities.iloc[0,:]['city']]
 avg_city_val = round(float(avg_city.iloc[0,:]['w_avg']),2)
 
-avg_ints = pd.read_csv(os.path.join(brand_profiles,f'Music_Rapper_interests_avg.csv'),dtype=str)
+avg_ints = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_interests_avg.csv'),dtype=str)
 avg_ints = avg_ints.rename(columns={'w_avg':'Percent'}).head(15)
 avg_ints = avg_ints[['interests','Percent']]
 avg_ints['Percent'] = avg_ints['Percent'].astype(float).round(2)
