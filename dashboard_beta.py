@@ -149,7 +149,7 @@ with col1:
      total_jobs = jobs.append(avg_jobs)
      total_jobs = total_jobs[total_jobs.duplicated(subset=['jobs'], keep=False)]
      st.subheader("Top follower jobs")
-     st.dataframe(total_jobs)
+     #st.dataframe(total_jobs)
      a = px.bar(total_jobs,x='Percent',y="jobs",barmode='group',orientation='h',color='Brand')
      a.update_layout(yaxis={'categoryorder': 'total ascending'})
 
