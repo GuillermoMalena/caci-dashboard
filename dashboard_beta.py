@@ -13,7 +13,22 @@ brand_avgs = ('./brand_means')
 ##set header
 
 st.set_page_config(page_title='Caci Twitter Analyzer',  layout='wide', page_icon=':chart_with_upwards_trend:')
-
+st.markdown("""
+        <style>
+               .css-18e3th9 {
+                    padding-top: 0rem;
+                    padding-bottom: 10rem;
+                    padding-left: 5rem;
+                    padding-right: 5rem;
+                }
+               .css-1d391kg {
+                    padding-top: 3.5rem;
+                    padding-right: 1rem;
+                    padding-bottom: 3.5rem;
+                    padding-left: 1rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
 
 ## Import Brands Key
 brands_csv = pd.read_csv('brands_key.csv')
@@ -134,7 +149,7 @@ with col1:
      total_jobs = jobs.append(avg_jobs)
      total_jobs = total_jobs[total_jobs.duplicated(subset=['jobs'], keep=False)]
      st.subheader("Top follower jobs")
-     #st.dataframe(total_jobs)
+     st.dataframe(total_jobs)
      a = px.bar(total_jobs,x='Percent',y="jobs",barmode='group',orientation='h',color='Brand')
      a.update_layout(yaxis={'categoryorder': 'total ascending'})
 
