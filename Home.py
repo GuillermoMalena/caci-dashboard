@@ -1,5 +1,6 @@
 
 import streamlit as st
+from annotated_text import annotated_text
 import pandas as pd
 import plotly.express as px
 import requests
@@ -36,10 +37,10 @@ hide_decoration_bar_style = '''
     </style>
 '''
 st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
-
 ## Import Brands Key
 brands_csv = pd.read_csv('brands_key.csv')
 brands_list = brands_csv['User']
+
 #selected_brand = brands_csv.loc[brands_csv['User'] == option]
 #profile_pic = selected_brand['Profile Picture URL'].reset_index(drop=True)[0]
 
@@ -52,6 +53,18 @@ with a1:
       brands_list)
      selected_brand = brands_csv.loc[brands_csv['User'] == option]
      profile_pic = selected_brand['Profile Picture URL'].reset_index(drop=True)[0]
+     category1 = selected_brand['Category Level 1'].reset_index(drop=True)[0]
+     category2 = selected_brand['Category Level 2'].reset_index(drop=True)[0]
+     annotated_text(
+    "You have selected the brand",
+    (f'{option}',  "","#8ef"),
+    ("which is part of the"),
+    (f'{category1}',"","#afa"),
+    "category and the ",
+    (f'{category2}', "","#fea"),
+    "sub-category ",
+    "."
+)
 with a2:
      def load_lottieurl(url: str):
           r = requests.get(url)
@@ -66,8 +79,7 @@ with a2:
 ## Pull in categories and entities
 #brands_csv = pd.read_csv('brands_key.csv')
 #selected_brand = brands_csv.loc[brands_csv['User'] == option]
-category1 = selected_brand['Category Level 1'].reset_index(drop=True)[0]
-category2 = selected_brand['Category Level 2'].reset_index(drop=True)[0]
+
 
 #Pull the profile databases
 option = option.lower()
@@ -195,6 +207,7 @@ with col4:
      city_geo = pd.read_csv('city_coordinates.csv')[['city','lat','lon']]
      city_map = cities.merge(city_geo,how='inner',left_on='city',right_on='city')[['city','Percent','lat','lon']]
      city_map['Percent'] = city_map['Percent'].astype(float)
+     st.dataframe(city_map)
      map_fig = px.scatter_geo(city_map, lat = 'lat',lon='lon', color="city",
                           hover_name="city", size="Percent",scope='usa')
      st.plotly_chart(map_fig, use_container_width=True)
