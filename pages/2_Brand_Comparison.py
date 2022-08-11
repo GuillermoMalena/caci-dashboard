@@ -6,12 +6,36 @@ import requests
 from streamlit_lottie import st_lottie
 import os
 
+st.markdown("""
+        <style>
+               .css-18e3th9 {
+                    padding-top: 0rem;
+                    padding-bottom: 10rem;
+                    padding-left: 5rem;
+                    padding-right: 5rem;
+                }
+               .css-1d391kg {
+                    padding-top: 3.5rem;
+                    padding-right: 1rem;
+                    padding-bottom: 3.5rem;
+                    padding-left: 1rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
+
+hide_decoration_bar_style = '''
+    <style>
+        header {visibility: hidden;}
+    </style>
+'''
+st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
+
 brand_db = r'/Users/GuillermoMalena_1/Desktop/Cacicazgo/Code/twitter_scraper/brand_db/'
 
-brand_profiles = ('./brand_profiles')
-brand_avgs = ('./brand_means')
+brand_profiles = ('../caci-dashboard/brand_profiles')
+brand_avgs = ('../caci-dashboard/brand_means')
     
-brands_key_df = pd.read_csv(r'/Users/GuillermoMalena_1/Desktop/Cacicazgo/Code/caci-dashboard/brands_key.csv',dtype={'User ID':'string'})
+brands_key_df = pd.read_csv('../caci-dashboard/brands_key.csv',dtype={'User ID':'string'})
 brands_key_list = brands_key_df['User'].to_list()
 
 brands_cat_list = []
@@ -26,7 +50,7 @@ brands_list = brands_cat_list
 
 
 brands = st.multiselect(
-    "Choose brands", brands_list, ["kendricklamar", "drake"]
+    "Choose which brands you would like to compare directly", brands_list, ["kendricklamar", "drake"]
 )
 
 jobs_df = []

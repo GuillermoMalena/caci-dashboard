@@ -38,7 +38,7 @@ hide_decoration_bar_style = '''
 '''
 st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 ## Import Brands Key
-brands_csv = pd.read_csv('brands_key.csv')
+brands_csv = pd.read_csv('../caci-dashboard/brands_key.csv')
 brands_list = brands_csv['User']
 
 #selected_brand = brands_csv.loc[brands_csv['User'] == option]
@@ -47,7 +47,7 @@ brands_list = brands_csv['User']
 
 a1,a2 = st.columns([2,1])
 with a1:
-     st.title("Welcome to Caci Twitter Analyzer")
+     st.title("Welcome to Caci Twitter Dashboard")
      option = st.selectbox(
      'Which Twitter handle do you want to analyze?',
       brands_list)
