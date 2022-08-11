@@ -13,7 +13,7 @@ brand_avgs = ('./brand_means')
 
 ##set header
 
-st.set_page_config(page_title='Caci Twitter Analyzer',  layout='wide', page_icon=':chart_with_upwards_trend:')
+st.set_page_config(page_title='Caci Twitter Analyzer',  layout='wide', page_icon=':chart_with_upwards_trend:',initial_sidebar_state='collapsed')
 st.markdown("""
         <style>
                .css-18e3th9 {
@@ -111,6 +111,9 @@ fam['Percent'] = fam['Percent'].astype(float).round(2)
 
 
 ## get top values
+top_int = round(float(ints.iloc[0,:]['Percent']),2)
+top_int_str = ints.iloc[0,:]['interests']
+
 top_nat = round(float(nat.iloc[0,:]['Percent']),2)
 top_nat_str = nat.iloc[0,:]['nationality']
 
@@ -132,7 +135,7 @@ avg_jobs_top = avg_jobs.loc[avg_jobs['jobs'] == jobs.iloc[0,:]['jobs']]
 avg_jobs_val =  round(float(avg_jobs_top.iloc[0,:]['Percent']),2)
 
 avg_nat = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_nationality_avg.csv'),dtype=str)
-avg_nat = avg_nat.rename(columns={'job':'jobs','w_avg':'Percent'})
+avg_nat = avg_nat.rename(columns={'w_avg':'Percent'})
 avg_nat = avg_nat[['nationality','Percent']]
 avg_nat['Percent'] = avg_nat['Percent'].astype(float).round(2)
 avg_nat['Brand'] = 'Average'
@@ -140,26 +143,29 @@ avg_nat_top = avg_nat.loc[avg_nat['nationality'] == nat.iloc[0,:]['nationality']
 avg_nat_val =  round(float(avg_nat_top.iloc[0,:]['Percent']),2)
 
 avg_city = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_city_avg.csv'),dtype=str)
-avg_city = avg_city[['city','w_avg','Category Level 1','Category Level 2','Entity']]
-avg_city = avg_city.loc[avg_city['city'] == cities.iloc[0,:]['city']]
-avg_city_val = round(float(avg_city.iloc[0,:]['w_avg']),2)
+avg_city= avg_city.rename(columns={'w_avg':'Percent'})
+avg_city = avg_city[['city','Percent']]
+avg_city_top = avg_city.loc[avg_city['city'] == cities.iloc[0,:]['city']]
+avg_city_val = round(float(avg_city_top.iloc[0,:]['Percent']),2)
 
 avg_ints = pd.read_csv(os.path.join(brand_avgs,f'Music_Rapper_interests_avg.csv'),dtype=str)
 avg_ints = avg_ints.rename(columns={'w_avg':'Percent'}).head(15)
 avg_ints = avg_ints[['interests','Percent']]
 avg_ints['Percent'] = avg_ints['Percent'].astype(float).round(2)
 avg_ints['Brand'] = 'Average'
+avg_ints_top = avg_ints.loc[avg_ints['interests'] == ints.iloc[0,:]['interests']]
+avg_ints_val = round(float(avg_ints_top.iloc[0,:]['Percent']),2)
 
 ## get diffs
-job_diff = round(top_jobs - avg_jobs_val,2)
+int_diff = round(top_int - avg_ints_val,2)
 nat_diff = round(top_nat - avg_nat_val,2)
 city_diff = round(top_cities - avg_city_val,2)
 
 m1,m2,m3 = st.columns((1,1,1))
 m1.metric(label='Top Audience Nationality', value=f'{top_nat_str} ({top_nat}%)',
           delta=str(nat_diff) + f'% Compared to average {category2} category')
-m2.metric(label='Top Audience Job/Profession', value=f'{top_job_str} ({top_jobs}%)',
-          delta=str(job_diff) + f'% Compared to average {category2} category')
+m2.metric(label='Top Audience Interest', value=f'{top_int_str} ({top_int}%)',
+          delta=str(int_diff) + f'% Compared to average {category2} category')
 m3.metric(label='Top Audience City', value=f'{top_city_str}  ({top_cities}%)',
           delta=str(city_diff) +  f'% Compared to average {category2} category')
 
@@ -178,7 +184,7 @@ with col2:
      total_ints = ints.append(avg_ints)
      st.subheader("Top follower interests")
      total_ints = total_ints[total_ints.duplicated(subset=['interests'], keep=False)]
-
+     #st.dataframe(avg_ints)
      b = px.bar(total_ints, x='Percent', y="interests", barmode='group', orientation='h', color='Brand')
      b.update_layout(yaxis={'categoryorder': 'total ascending'})
      st.plotly_chart(b, use_container_width=True)
@@ -207,7 +213,7 @@ with col4:
      city_geo = pd.read_csv('city_coordinates.csv')[['city','lat','lon']]
      city_map = cities.merge(city_geo,how='inner',left_on='city',right_on='city')[['city','Percent','lat','lon']]
      city_map['Percent'] = city_map['Percent'].astype(float)
-     st.dataframe(city_map)
+    
      map_fig = px.scatter_geo(city_map, lat = 'lat',lon='lon', color="city",
                           hover_name="city", size="Percent",scope='usa')
      st.plotly_chart(map_fig, use_container_width=True)
