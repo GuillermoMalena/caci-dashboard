@@ -32,14 +32,14 @@ st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 
 brand_db = r'/Users/GuillermoMalena_1/Desktop/Cacicazgo/Code/twitter_scraper/brand_db/'
 
-brand_profiles = ('../caci-dashboard/brand_profiles')
-brand_avgs = ('../caci-dashboard/brand_means')
+brand_profiles = ('../brand_profiles')
+brand_avgs = ('../brand_means')
     
-brands_key_df = pd.read_csv('../caci-dashboard/brands_key.csv',dtype={'User ID':'string'})
-brands_key_list = brands_key_df['User'].to_list()
+brands_key_df = pd.read_csv('../brands_key.csv',dtype={'User ID':'string'})
+brands_key_list = brands_key_df['User'].drop_duplicates().to_list()
 
-brands_list = brands_key_df['User'].drop_duplicates().to_list()
-
+brands_list = [x.lower() for x in brands_key_list]
+print(brands_list)
 
 brands = st.multiselect(
     "Choose which brands you would like to compare directly", brands_list, ["kendricklamar", "drake"]
