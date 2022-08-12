@@ -38,15 +38,7 @@ brand_avgs = ('../caci-dashboard/brand_means')
 brands_key_df = pd.read_csv('../caci-dashboard/brands_key.csv',dtype={'User ID':'string'})
 brands_key_list = brands_key_df['User'].to_list()
 
-brands_cat_list = []
-for i in brands_key_list:
-    brands_key_filepath = os.path.join(brand_db,f'{i.lower()}_followers.csv')
-  
-    if os.path.isfile(brands_key_filepath) is True:
-     
-        i = i.lower()
-        brands_cat_list.append(i)
-brands_list = brands_cat_list
+brands_list = brands_key_df['User'].drop_duplicates().to_list()
 
 
 brands = st.multiselect(
