@@ -31,10 +31,10 @@ hide_decoration_bar_style = '''
 st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 
 
-brand_profiles = ('./sub_brand_profiles')
-brand_avgs = ('./brand_means')
+brand_profiles = ('../pages/sub_brand_profiles')
+brand_avgs = ('../pages/brand_means')
     
-brands_key_df = pd.read_csv('./brands_key.csv',dtype={'User ID':'string'})
+brands_key_df = pd.read_csv('../pages/brands_key.csv',dtype={'User ID':'string'})
 brands_key_list = brands_key_df['User'].drop_duplicates().to_list()
 
 brands_list = [x.lower() for x in brands_key_list]
@@ -50,6 +50,7 @@ city_df = []
 nats_df = []
 def get_profile(brand, profile):
     profile = pd.read_csv(os.path.join(brand_profiles,f'{brand}_{profile}.csv'),dtype=str).head(15)
+    print(os.path.join(brand_profiles,f'{brand}_{profile}.csv'))
     profile = profile.rename(columns ={f'{brand}_percent':'Percent'})
     profile['Percent'] = profile['Percent'].astype(float).round(2)
     profile['Brand'] = i
