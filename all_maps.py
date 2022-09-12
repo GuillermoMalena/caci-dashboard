@@ -315,9 +315,9 @@ def grab_maps():
 
     }
     family_map = {
-    'Dad':'Dad','dad':'Dad','father':'Father','Father':'Father',
-    'husband':'Husband','Mother':'Mother','#boymom':'Mother',
-    'Mommy':'Mother','Wifey':'Wife','Wife':'Wife','wife':'Wife','mum':'Mother','Mum':'Mother',
+    'Dad':'Father/Husband','dad':'Father/Husband','father':'Father/Husband','Father':'Father/Husband',
+    'husband':'Father/Husband','Mother':'Mother/Wife','#boymom':'Mother/Wife',
+    'Mommy':'Mother/Wife','Wifey':'Mother/Wife','Wife':'Mother/Wife','wife':'Mother/Wife','mum':'Mother/Wife','Mum':'Mother/Wife',
 
     }
     
